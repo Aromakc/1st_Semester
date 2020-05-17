@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+int i=0;
+int n=0;
 struct country
     {
         char name[10];    
@@ -25,9 +27,10 @@ struct country
         recovercases(j);
         deathcases(j);
     }
-
-    int add_country(int i,int n){
-    n++;
+//********************************************************************************************************
+    void add_country(){
+    extern int i;
+    extern int n;
     printf("Enter Country name ");
     scanf("%s",nation[i].name);
     printf("Enter active cases ");
@@ -36,12 +39,14 @@ struct country
     scanf("%d",&nation[i].rec);
     printf("Enter death cases ");
     scanf("%d",&nation[i].death);
-    
-    printf("Countries recorded %d",i+1);
+    i++;
+    n++;
+    printf("Countries recorded %d",i);
     }
-
+ // *****************************************************************************************************
     int search_country(int k,int n){
         { int r=0,three;
+        extern int n;
             char choice[200];
             printf("Which country's data you want to know about?");
             scanf("%s",choice);
@@ -71,18 +76,12 @@ struct country
         }
         }
     }
-
+// **************************************************************************************
 int main()
 {
-    static int i=0;
-    static int n=0;
+ add_country();   
     int j,k=0,r,three;
-    
-    printf("how many countries record you want to input?");
-    scanf("%d",&n);
-    for(i=0;i<n;i++){
-       add_country(i,n) ;
-    }
+
     char loop;
     do
     { 
@@ -97,9 +96,8 @@ int main()
         search_country(i,n);
         }
     else if(next =='D')
-     { i++;
-       n++;
-         add_country(i,n);
+     { 
+         add_country();
      }
     else
         break;
