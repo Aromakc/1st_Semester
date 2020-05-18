@@ -32,7 +32,7 @@ struct country
     extern int i;
     extern int n;
     printf("Enter Country name ");
-    scanf("%s",nation[i].name);
+    scanf(" %[^\n]",nation[i].name);
     printf("Enter active cases ");
     scanf("%d",&nation[i].active);
     printf("Enter recovered cases ");
@@ -41,7 +41,8 @@ struct country
     scanf("%d",&nation[i].death);
     i++;
     n++;
-    printf("Countries recorded %d",i);
+    printf("*********************** \n");
+    printf("Countries recorded : %d \n",i);
     }
  // *****************************************************************************************************
     int search_country(int k,int n){
@@ -49,14 +50,12 @@ struct country
         extern int n;
             char choice[200];
             printf("Which country's data you want to know about?");
-            scanf("%s",choice);
+            scanf(" %[^\n]",choice);
             for (k=0;k<n;k++)
             {
             r=strcmp(choice,nation[k].name);
             if (r!=0)
-            {   printf("check");
-                continue;
-            }
+            continue;
             else
             printf("Which case u wanna see \n");
             printf("1=Active cases \n");
@@ -74,35 +73,77 @@ struct country
                 break;
             }
         }
+        printf("Country Not listed. Want to add the country?");
         }
     }
 // **************************************************************************************
+wactivecases()
+{   extern int i;
+    extern int n;
+    int total_active=0;
+    for (i=0;i<n;i++)
+    { total_active += nation[i].active;}
+    return total_active;
+}
+wdeathcases()
+{   extern int i;
+    extern int n;
+    int total_deaths=0;
+    for (i=0;i<n;i++)
+    { total_deaths += nation[i].death;}
+    return total_deaths;
+}
+wrecovercases()
+{   extern int i;
+    extern int n;
+    int total_recover=0;
+    for (i=0;i<n;i++)
+    { total_recover += nation[i].rec;}
+    return total_recover;
+}
+wcases()
+{   extern int i;
+    extern int n;
+    int cases=0;
+    for (i=0;i<n;i++)
+    { cases += (wrecovercases()+wactivecases()+wdeathcases());}
+    return cases;
+}
 int main()
 {
- add_country();   
-    int j,k=0,r,three;
+    printf("*******RECORD OF COVID 19*********** \n");
+    printf("************************************ \n");
+    add_country();   
+    int j,k=0;
 
     char loop;
-    do
+    do    
     { 
     
     char next;    
     printf("******************************** \n");
-    printf("Press C: Search another country \n");
+    printf("Press C: Search Countries \n");
     printf("Press D: Add new data \n");
+    printf("Choice : ");
     scanf("%s",&next);
-    if(next == 'C')
-        {printf("fker\n");
+    if(next == 'C' || next =='c')
         search_country(i,n);
-        }
-    else if(next =='D')
+    else if(next =='D' || next =='d')
      { 
          add_country();
      }
     else
         break;
-    printf("Wanna proceed y/n ");
+    flag1:
+    printf("\n");
+    printf("Do you want to proceed (y/n) ");
     scanf("%s",&loop);}
     while (loop =='y');
-    return 0;
+   
+    printf("World active cases = %d \n",wcases());
+    printf("World active cases = %d \n",wactivecases());
+    printf("World Recovered cases= %d \n",wrecovercases());
+    printf("World Deaths cases = %d \n",wdeathcases());
+    goto flag1;
+    
 }
