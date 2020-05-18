@@ -31,7 +31,7 @@ struct country
     void add_country(){
     extern int i;
     extern int n;
-    printf("Enter Country name ");
+    printf("\nEnter Country name ");
     scanf(" %[^\n]",nation[i].name);
     printf("Enter active cases ");
     scanf("%d",&nation[i].active);
@@ -41,7 +41,7 @@ struct country
     scanf("%d",&nation[i].death);
     i++;
     n++;
-    printf("*********************** \n");
+    printf("\n************************************ \n");
     printf("Countries recorded : %d \n",i);
     }
  // *****************************************************************************************************
@@ -73,10 +73,10 @@ struct country
                 break;
             }
         }
-        printf("Country Not listed. Want to add the country?");
+        printf("\n ;( Oops, country is not listed.\n    You can add though :)");
         }
     }
-// **************************************************************************************
+
 wactivecases()
 {   extern int i;
     extern int n;
@@ -109,6 +109,11 @@ wcases()
     { cases += (wrecovercases()+wactivecases()+wdeathcases());}
     return cases;
 }
+void printworld()
+   { printf("\nWorld total cases = %d \n",wcases());
+    printf("World active cases = %d \n",wactivecases());
+    printf("World Recovered cases= %d \n",wrecovercases());
+    printf("World Deaths cases = %d \n",wdeathcases());}
 int main()
 {
     printf("*******RECORD OF COVID 19*********** \n");
@@ -121,29 +126,25 @@ int main()
     { 
     
     char next;    
-    printf("******************************** \n");
+    printf("************************************ \n");
     printf("Press C: Search Countries \n");
     printf("Press D: Add new data \n");
+    printf("Press W: See World records \n");
+    printf("Press Q: Quit the program \n");
     printf("Choice : ");
     scanf("%s",&next);
     if(next == 'C' || next =='c')
         search_country(i,n);
     else if(next =='D' || next =='d')
-     { 
          add_country();
-     }
+    else if(next == 'W' || next =='w')
+        printworld();
     else
         break;
-    flag1:
     printf("\n");
-    printf("Do you want to proceed (y/n) ");
+    printf("\nDo you want to proceed (y/n) ");
     scanf("%s",&loop);}
     while (loop =='y');
-   
-    printf("World active cases = %d \n",wcases());
-    printf("World active cases = %d \n",wactivecases());
-    printf("World Recovered cases= %d \n",wrecovercases());
-    printf("World Deaths cases = %d \n",wdeathcases());
-    goto flag1;
+    exit;
     
 }
