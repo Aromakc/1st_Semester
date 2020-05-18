@@ -1,9 +1,12 @@
+// SUBASH KHATRI 33 CS-1st Year
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
-struct country
-    {
-        char name[10];    
+#include<ctype.h>
+int i=0;
+int n=0;
+struct country{
+        char name[20];    
         int active;
         int rec;
         int death;
@@ -25,189 +28,131 @@ struct country
         recovercases(j);
         deathcases(j);
     }
-
-    int add_country(int k){
-    printf("Enter Country name ");
-    scanf("%s",nation[k].name);
+// Function to add country
+    void add_country(){
+    extern int i;
+    extern int n;
+    printf("\nEnter Country name (First letter capital)");
+    scanf(" %[^\n]",nation[i].name);
     printf("Enter active cases ");
-    scanf("%d",&nation[k].active);
+    scanf("%d",&nation[i].active);
     printf("Enter recovered cases ");
-    scanf("%d",&nation[k].rec);
+    scanf("%d",&nation[i].rec);
     printf("Enter death cases ");
-    scanf("%d",&nation[k].death);
+    scanf("%d",&nation[i].death);
+    i++;
+    n++;
+    printf("\n************************************ \n");
+    printf("Countries recorded : %d \n",i);
     }
-
-    int search_country(int i,int n){
+// Function  to search recorded countries
+    int search_country(int k,int n){
         { int r=0,three;
+            extern int n;
             char choice[200];
-            printf("Which country's data you want to know about?");
-            scanf("%s",choice);
-            for (i=0;i<n;i++)
+            printf("\n Which country's info do you want (First letter Capital)? ");
+            scanf(" %[^\n]",choice);
+            for (k=0;k<n;k++)
             {
-            r=strcmp(choice,nation[i].name);
-            if (r!=0)
-            continue;
-            else
-            printf("Which case u wanna see \n");
-            printf("1=Active cases \n");
-            printf("2=Recovered \n");
-            printf("3=Deaths \n");
-            printf("4=all cases \n");
-            scanf("%d",&three);
-            switch (three)
-            {
-                case 1 : activecases(i); break;
-                case 2 : recovercases(i); break;
-                case 3: deathcases(i); break;
-                case 4: allcases(i); break;
-                default: printf("Wrong Input \n"); 
-                break;
-            }
+                r=strcmp(choice,nation[k].name);
+                if (r!=0){
+                    if((k+1)==n)
+                     {printf("*****Country is not listed****");}
+                    continue;}
+                else
+                printf("Which case u wanna see \n");
+                printf("1=Active cases \n");
+                printf("2=Recovered \n");
+                printf("3=Deaths \n");
+                printf("4=all cases \n");
+                scanf("%d",&three);
+                switch (three)
+                {
+                    case 1 : activecases(k); break;
+                    case 2 : recovercases(k); break;
+                    case 3: deathcases(k); break;
+                    case 4: allcases(k); break;
+                    default: printf("Wrong Input \n"); 
+                    break;
+                }
+            }      
         }
-        }
     }
-
-int main()
-{
-    static int i=0;
-    static int n=0;
-    int j,k=0,r,three;
-    
-    printf("how many countries record you want to input?");
-    scanf(" %d",&n);
-    for(i=0;i<n;i++){
-        
-        printf("Enter Country name ");
-        scanf("%s",nation[i].name);
-        printf("Enter active cases ");
-        scanf("%d",&nation[i].active);
-        printf("Enter recovered cases ");
-        scanf("%d",&nation[i].rec);
-        printf("Enter death cases ");
-        scanf("%d",&nation[i].death);
-        printf("\n");
-        
-     }
-    char loop;
-    do
-    { 
-    
-    char next;    
-    printf("******************************** \n");
-    printf("Press C: Search another country \n");
-    printf("Press D: Add new data \n");
-    scanf("%s",next);
-    if(next == 'C')
-        search_country(i,n);
-    else if(next =='D')
-        add_country(i);
-    else
-        break;
-    printf("Wanna proceed y/n");
-    scanf("%s",&loop);}
-    while (loop=='y');
-    return 0;
-}
-
-
-
-
-
-
-
-
-
-
-/*
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
-struct country
-    {
-        char name[10];    
-        int active;
-        int rec;
-        int death;
-    }nation[200];
- 
-    int activecases(int j){
-    printf("The number of active cases are: %d\n",nation[j].active);
-    }
-    int recovercases(int j){
-        printf("The number of recoverd are: %d\n",nation[j].rec);
-    }
-    int deathcases(int j){
-        printf("The number of deaths are: %d\n", nation[j].death);
-    }
-    int allcases(int j){
-        int total = nation[j].active+nation[j].rec+nation[j].death;
-        printf("Total occured cases are: %d\n",total);
-        activecases(j);
-        recovercases(j);
-        deathcases(j);
-    }
-
-    int add_country(int k){
-    printf("Enter Country name ");
-    scanf("%s",nation[k].name);
-    printf("Enter active cases ");
-    scanf("%d",&nation[k].active);
-    printf("Enter recovered cases ");
-    scanf("%d",&nation[k].rec);
-    printf("Enter death cases ");
-    scanf("%d",&nation[k].death);
-    }
-int main()
-{
-    int i=0,j,n,k=0,r,three;
-    char choice[200];
-    printf("how many countries record you want to input?");
-    scanf(" %d",&n);
-    for(i=0;i<n;i++){
-        
-        printf("Enter Country name ");
-        scanf("%s",nation[i].name);
-        printf("Enter active cases ");
-        scanf("%d",&nation[i].active);
-        printf("Enter recovered cases ");
-        scanf("%d",&nation[i].rec);
-        printf("Enter death cases ");
-        scanf("%d",&nation[i].death);
-        printf("\n");
-        k=i;
-    }
-    printf("Which country's data you want to know about?");
-    scanf("%s",choice);
+// Function to calculate world active cases
+int wactivecases()
+{   extern int i;
+    extern int n;
+    int total_active=0;
     for (i=0;i<n;i++)
-    {
-        r=strcmp(choice,nation[i].name);
-        if (r!=0)
-        continue;
-        else
-        {
-        printf("Which case u wanna see \n");
-        printf("1=Active cases \n");
-        printf("2=Recovered \n");
-        printf("3=Deaths \n");
-        printf("4=all cases \n");
-        scanf("%d",&three);
-        switch (three)
-        {
-            case 1 : activecases(i); break;
-            case 2 : recovercases(i); break;
-            case 3: deathcases(i); break;
-            case 4: allcases(i); break;
-            default: printf("Wrong Input \n"); 
-            break;
-        }
-    printf("******************************** \n");
-    printf("Press 1: Search another country \n");
-    printf("Press 2: Add new value \n");
-    if()
-        }
-    }
-   
-return 0;
+    { total_active += nation[i].active;}
+    return total_active;
+}
+// Function to calculate world death cases
+int wdeathcases()
+{   extern int i;
+    extern int n;
+    int total_deaths=0;
+    for (i=0;i<n;i++)
+    { total_deaths += nation[i].death;}
+    return total_deaths;
+}
+// Function to calculate world recovered cases
+int wrecovercases()
+{   extern int i;
+    extern int n;
+    int total_recover=0;
+    for (i=0;i<n;i++)
+    { total_recover += nation[i].rec;}
+    return total_recover;
+}
+// Function to calculate world total cases
+int wcases()
+{   extern int i;
+    extern int n;
+    int cases=0;
+    for (i=0;i<n;i++)
+    { cases += (wrecovercases()+wactivecases()+wdeathcases());}
+    return cases;
+}
+// Function to print overall world cases
+void printworld()
+{   
+    printf("\nWorld total cases = %d \n",wcases());
+    printf("World active cases = %d \n",wactivecases());
+    printf("World Recovered cases= %d \n",wrecovercases());
+    printf("World Deaths cases = %d \n",wdeathcases());
 }
 
-*/
+int main()
+{
+    printf("*******RECORD OF COVID 19*********** \n");
+    printf("************************************ \n");
+    add_country();   
+    int j,k=0;
+    int loop;
+    do    
+    {     
+    char next;    
+    printf("************************************ \n");
+    printf("Press C: Search Countries \n");
+    printf("Press D: Add new data \n");
+    printf("Press W: See World records(Sum datas) \n");
+    printf("Press Q: Quit the program \n");
+    printf("Choice : ");
+    scanf("%s",&next);
+    if(toupper(next) == 'C')
+        search_country(i,n);
+    else if(toupper(next) =='D')
+         add_country();
+    else if(toupper(next) == 'W')
+        printworld();
+    else if(toupper(next) == 'Q')
+       goto flag1;
+    else
+        printf("\nWrong input \n");
+        printf("\n->Press 1 to continue \n->Press 2 to quit\n");
+    scanf("%d",&loop);}
+    while (loop!=2);
+    flag1:
+    exit;    
+}
